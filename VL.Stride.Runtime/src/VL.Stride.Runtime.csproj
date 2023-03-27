@@ -22,6 +22,24 @@
     <None Include="..\help\**\*" Link="help\%(RecursiveDir)%(Filename)%(Extension)" Pack="true" AutoGen="false" PackagePath="help\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   
+  <!--<ItemGroup>
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\*.cs" Link="Atmosphere\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+    <Compile Include="..\..\TR.Stride\TR.Stride.Atmosphere\*.cs" Link="Atmosphere\%(RecursiveDir)%(Filename)%(Extension)">
+    </Compile>
+      
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.sdsl" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.sdfx" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+      
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.cs" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+      
+    <Compile Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.cs" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </Compile>
+  </ItemGroup>-->
+  
   <ItemGroup>
     <!-- A pure package dependency so on install all VL packages come in -->
     <PackageReference Include="Stride.Core" />
@@ -34,6 +52,7 @@
     <PackageReference Include="Stride.UI" />
     <PackageReference Include="Stride.Video" />
     <PackageReference Include="Stride.VirtualReality" />
+    <PackageReference Include="Stride.Graphics.RenderDocPlugin" />
   </ItemGroup>
   <Target Name="IncludeStridePackageContent" BeforeTargets="InferPackageContents" DependsOnTargets="_StridePrepareAssetsForPack">
     <Message Importance="high" Text="Called Stride package targets" />
@@ -47,6 +66,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\VL.Core\src\VL.Core.csproj" />
     <ProjectReference Include="..\..\VL.CoreLib\src\VL.CoreLib.csproj" />
+    <ProjectReference Include="..\..\TR.Stride\TR.Stride.Atmosphere\TR.Stride.Atmosphere.csproj" />
+    <ProjectReference Include="..\..\TR.Stride\TR.Stride.PostProcess\TR.Stride.PostProcess.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="vvvv.geometry3Sharp">
@@ -67,6 +88,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Effects\ComputeFX\ComputeFXEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Effects\ComputeFX\ComputeFXGraphEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Effects\Demos\DrawParticles.sdsl.cs">
       <DesignTime>True</DesignTime>
     </Compile>
@@ -75,6 +106,11 @@
     </Compile>
     <Compile Update="Effects\Demos\Simulation.sdsl.cs">
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Effects\DrawFXEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Effects\EffectNodeBaseKeys.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -88,11 +124,24 @@
     <Compile Update="Effects\HappyLibs\HappySDF.sdsl.cs">
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Update="Effects\ShaderFX\AzureKinect\ReconstructPointCloud.sdsl.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Update="Effects\ShaderFX\ComputeValue\ComputeTexture2D.sdsl.cs">
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Update="Effects\ShaderFX\ComputeValue\ComputeTexture2DArray.sdsl.cs">
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Effects\ShaderFX\ShaderFXEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Effects\ShaderFX\ShaderFXGraphEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Effects\ShaderFX\TextureFXEffect.sdfx.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -316,7 +365,17 @@
     <Compile Update="Effects\TextureFX\Sources\Stripes_TextureFX.sdsl.cs">
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Update="Effects\TextureFX\TextureFXEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Effects\TextureFX\TextureFXGraphEffect - Kopie.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Effects\TextureFX\TextureFXGraphEffect.sdfx.cs">
       <DesignTime>True</DesignTime>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -326,6 +385,31 @@
     </Compile>
     <Compile Update="Effects\Utils\CalcDispatchArgs.sdsl.cs">
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Effects\VLAtmosphereEffectMain.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Effects\VLEffectMain - Kopie.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Effects\VLEffectMain.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Rendering\Images\AmbientOcclusionWithOrtho\AmbientOcclusionWithOrthoBlurEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Rendering\Images\AmbientOcclusionWithOrtho\AmbientOcclusionWithOrthoRawAOEffect.sdfx.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Rendering\Materials\FallbackMaterial\SceneEditorParameters.sdfx.cs">
       <DesignTime>True</DesignTime>
@@ -339,6 +423,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Effects\ComputeFX\ComputeFXEffect.sdfx">
+      <LastGenOutput>ComputeFXEffect.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\ComputeFX\ComputeFXGraphEffect.sdfx">
+      <LastGenOutput>ComputeFXGraphEffect.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\DrawFXEffect.sdfx">
+      <LastGenOutput>DrawFXEffect.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\ShaderFX\ShaderFXEffect.sdfx">
+      <LastGenOutput>ShaderFXEffect.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\ShaderFX\ShaderFXGraphEffect.sdfx">
+      <LastGenOutput>ShaderFXGraphEffect.sdfx.cs</LastGenOutput>
+    </None>
     <None Update="Effects\ShaderFX\TextureFXEffect.sdfx">
       <LastGenOutput>TextureFXEffect.sdfx.cs</LastGenOutput>
     </None>
@@ -360,11 +459,32 @@
     <None Update="Effects\TextureFX\Mixers\Mix_TextureFX.sdsl">
       <LastGenOutput>%(Filename).sdsl.cs</LastGenOutput>
     </None>
+    <None Update="Effects\TextureFX\TextureFXEffect.sdfx">
+      <LastGenOutput>TextureFXEffect.sdfx.cs</LastGenOutput>
+    </None>
     <None Update="Effects\TextureFX\TextureFXGraphEffect - Kopie.sdfx">
       <LastGenOutput>TextureFXGraphEffect - Kopie.sdfx.cs</LastGenOutput>
     </None>
+    <None Update="Effects\TextureFX\TextureFXGraphEffect.sdfx">
+      <LastGenOutput>TextureFXGraphEffect.sdfx.cs</LastGenOutput>
+    </None>
     <None Update="Effects\TextureFX\Utils\Swizzle_Internal_TextureFX.sdsl">
       <LastGenOutput>Swizzle_Internal_TextureFX.sdsl.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\VLAtmosphereEffectMain.sdfx">
+      <LastGenOutput>VLAtmosphereEffectMain.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\VLEffectMain - Kopie.sdfx">
+      <LastGenOutput>VLEffectMain - Kopie.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Effects\VLEffectMain.sdfx">
+      <LastGenOutput>VLEffectMain.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Rendering\Images\AmbientOcclusionWithOrtho\AmbientOcclusionWithOrthoBlurEffect.sdfx">
+      <LastGenOutput>AmbientOcclusionWithOrthoBlurEffect.sdfx.cs</LastGenOutput>
+    </None>
+    <None Update="Rendering\Images\AmbientOcclusionWithOrtho\AmbientOcclusionWithOrthoRawAOEffect.sdfx">
+      <LastGenOutput>AmbientOcclusionWithOrthoRawAOEffect.sdfx.cs</LastGenOutput>
     </None>
     <None Update="Rendering\Materials\FallbackMaterial\SceneEditorParameters.sdfx">
       <LastGenOutput>SceneEditorParameters.sdfx.cs</LastGenOutput>

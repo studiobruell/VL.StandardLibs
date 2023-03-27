@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Document xmlns:p="property" Id="VCMcVJqu2AbNoidKDyIIxx" LanguageVersion="2022.5.0-0696-g73767f5671" Version="0.128">
-  <NugetDependency Id="IwFuWAsksSjNS3ODAW7nRf" Location="VL.CoreLib" Version="2021.4.0-0550-g8cff9643c5" />
+  <NugetDependency Id="IwFuWAsksSjNS3ODAW7nRf" Location="VL.CoreLib" Version="2022.5.0-0588-gd1fc2ab3af" />
   <Patch Id="SlSTRgKk3RKLNO8cT8Z9b1">
     <Canvas Id="RIoKw4EfYXPN47D4Py79qi" DefaultCategory="Stride" CanvasType="FullCategory">
       <Canvas Id="GvaTKvoohafPTwURvDXRqk" Name="Textures" Position="290,261">
@@ -1781,7 +1781,7 @@
       </Patch>
     </Node>
   </Patch>
-  <NugetDependency Id="SQUp3S4UbQcLBGFPR8NLzS" Location="VL.CoreLib" Version="2021.4.0-0550-g8cff9643c5" />
+  <NugetDependency Id="SQUp3S4UbQcLBGFPR8NLzS" Location="VL.CoreLib" Version="2022.5.0-0588-gd1fc2ab3af" />
   <DocumentDependency Id="AtW1NdCYqVKPZzzTixcESB" Location="./VL.Stride.Games.vl" />
   <DocumentDependency Id="HdGXsMIRxrlOHgdsxgtL7S" Location="./VL.Stride.Rendering.vl" />
   <DocumentDependency Id="KE8tt5StOj2PNqVXuyu4uQ" Location="./VL.Stride.Graphics.vl" />

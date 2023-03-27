@@ -3,6 +3,7 @@ using Stride.Core.Serialization.Contents;
 using Stride.Core.Storage;
 using Stride.Games;
 using Stride.Graphics;
+using Stride.Input;
 using Stride.Rendering;
 using Stride.Shaders.Compiler;
 using System;
@@ -12,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using VL.Core;
 using VL.Core.CompilerServices;
 using VL.Lib.Basics.Resources;
@@ -29,6 +29,27 @@ using ServiceRegistry = global::Stride.Core.ServiceRegistry;
 
 namespace VL.Stride.Core
 {
+    public static class RenderDocConnector
+    {
+        public static RenderDocManager RenderDocManager;
+        // The static ctor runs before the module initializer
+
+        [ModuleInitializer] //needs to be called before any Skia code is called by the vvvv UI
+        public static void Initialize()
+        {
+            if (Array.Exists(Environment.GetCommandLineArgs(), argument => argument == "--debug-gpu"))
+            {
+                var renderDocManager = new RenderDocManager();
+
+                if (!renderDocManager.IsInitialized)
+                    renderDocManager.Initialize();
+
+                if (renderDocManager.IsInitialized)
+                    RenderDocManager = renderDocManager;
+            }
+        }
+    }
+
     public sealed class Initialization : AssemblyInitializer<Initialization>
     {
         public static string GetPathToAssetDatabase()
@@ -54,7 +75,6 @@ namespace VL.Stride.Core
             if (dataDir != null)
                 ((FileSystemProvider)VirtualFileSystem.ApplicationData).ChangeBasePath(dataDir);
         }
-
         protected override void RegisterServices(IVLFactory factory)
         {
             var services = VL.Core.ServiceRegistry.Current;
@@ -88,6 +108,7 @@ namespace VL.Stride.Core
                 return MaterialNodes.GetNodeDescriptions(nodeFactory)
                     .Concat(LightNodes.GetNodeDescriptions(nodeFactory))
                     .Concat(CompositingNodes.GetNodeDescriptions(nodeFactory))
+                    .Concat(AtmosphereNodes.GetNodeDescriptions(nodeFactory))
                     .Concat(RenderingNodes.GetNodeDescriptions(nodeFactory));
             });
 

@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Document xmlns:p="property" Id="TiJxb2oN2LtNWRy2MbJV6Q" LanguageVersion="2022.5.0-0685-ga251664bc1" Version="0.128">
-  <NugetDependency Id="LpDzfnL2ypqNzyyOieWuHI" Location="VL.CoreLib" Version="2021.4.11-1125-g2d2d476ad1" />
+  <NugetDependency Id="LpDzfnL2ypqNzyyOieWuHI" Location="VL.CoreLib" Version="2022.5.0-0588-gd1fc2ab3af" />
   <PlatformDependency Id="JJ0ZRRgadtbPuisZUaeinf" Location="Stride.Graphics.dll" />
-  <NugetDependency Id="RUpxj8weM25L4I4AlKb6Yw" Location="VL.Core" Version="2021.4.11-1125-g2d2d476ad1" />
+  <NugetDependency Id="RUpxj8weM25L4I4AlKb6Yw" Location="VL.Core" Version="2022.5.0-0588-gd1fc2ab3af" />
   <PlatformDependency Id="IC8TlSKr9KnNYjdQ1ni0yJ" Location="Stride.dll" />
   <PlatformDependency Id="IzFXsvic9e0LQG5m2Qejqv" Location="../VL.Stride.Tests/src/bin/Debug/net472/Stride.Core.Mathematics.dll" />
   <NodeFactoryDependency Id="RQuja2dHYIeLUbtM4bRWNa" Location="VL.Stride.Graphics.Nodes" IsForward="true" />
@@ -2552,6 +2552,42 @@
                 </ProcessDefinition>
               </Patch>
             </Node>
+            <!--
+
+    ************************ IndexBufferBinding ************************
+
+-->
+            <Node Name="IndexBufferBinding" Bounds="954,542" Id="Bi7yMgGKbDYMvGjfzggaz4">
+              <p:NodeReference>
+                <Choice Kind="ForwardDefinition" Name="Forward" />
+                <FullNameCategoryReference ID="Primitive" />
+              </p:NodeReference>
+              <p:TypeAnnotation LastCategoryFullName="Stride.Graphics" LastDependency="Stride.Graphics.dll">
+                <Choice Kind="TypeFlag" Name="IndexBufferBinding" />
+              </p:TypeAnnotation>
+              <Patch Id="J9NQkw6nO4bLsUzS2hQDUv">
+                <Canvas Id="VAmWYDPiBoUMMYpxtGVaSU" BordersChecked="false" CanvasType="Group" />
+                <ProcessDefinition Id="RFUx7Z8SDchMX0sgXv29xG" IsHidden="true" />
+              </Patch>
+            </Node>
+            <!--
+
+    ************************ VertexBufferBinding ************************
+
+-->
+            <Node Name="VertexBufferBinding" Bounds="955,594" Id="OlLVzGjxZ87LwMYDkVntoO">
+              <p:NodeReference>
+                <Choice Kind="ForwardDefinition" Name="Forward" />
+                <FullNameCategoryReference ID="Primitive" />
+              </p:NodeReference>
+              <p:TypeAnnotation LastCategoryFullName="Stride.Graphics" LastDependency="Stride.Graphics.dll">
+                <Choice Kind="TypeFlag" Name="VertexBufferBinding" />
+              </p:TypeAnnotation>
+              <Patch Id="ERTGChJqkVEMjdbMwwPbjG">
+                <Canvas Id="G3v4oTz2a4qPfmZXhlG1Go" BordersChecked="false" CanvasType="Group" />
+                <ProcessDefinition Id="ONHoErlTkmtObtJCHHF8kv" IsHidden="true" />
+              </Patch>
+            </Node>
           </Canvas>
           <Canvas Id="PDuAyb8RiadPbxsMoQOabd" Name="Rendering" Position="318,494">
             <Canvas Id="AkbF0dRVD1bMMVUiHm3YHC" Name="Images" Position="417,450">
@@ -2805,6 +2841,9 @@
                           <CategoryReference Kind="Category" Name="Primitive" />
                         </p:NodeReference>
                         <Pin Id="LLpcbZywODSPyGh7v7KyHM" Name="Break" Kind="OutputPin" />
+                        <ControlPoint Id="FlxPZrSXqsoOSUn9IhkE0x" Bounds="548,398" Alignment="Top" />
+                        <ControlPoint Id="MyJXwl4LBNYNFdsaNXjXjI" Bounds="548,464" Alignment="Bottom" />
+                        <ControlPoint Id="U1iU2iRIgkFLS8lcvFm59s" Bounds="568,398" Alignment="Top" />
                         <Patch Id="LKa9lnXIVxMOH0zUDrTaSP" ManuallySortedPins="true">
                           <Patch Id="UyRQug4xJ4YPAtkim82q0b" Name="Create" ManuallySortedPins="true" />
                           <Patch Id="NQas4gblTSZNb6ONwv9gyf" Name="Update" ManuallySortedPins="true" />
@@ -2819,9 +2858,6 @@
                             <Pin Id="DTO7dPnFp72Pu2TGtgYgAT" Name="Output" Kind="OutputPin" />
                           </Node>
                         </Patch>
-                        <ControlPoint Id="FlxPZrSXqsoOSUn9IhkE0x" Bounds="548,398" Alignment="Top" />
-                        <ControlPoint Id="MyJXwl4LBNYNFdsaNXjXjI" Bounds="548,464" Alignment="Bottom" />
-                        <ControlPoint Id="U1iU2iRIgkFLS8lcvFm59s" Bounds="568,398" Alignment="Top" />
                       </Node>
                       <Pad Id="R4kY9wrHDa3Ljt7D1H6wCD" Comment="" Bounds="568,368,68,15" ShowValueBox="true" isIOBox="true">
                         <p:TypeAnnotation LastCategoryFullName="Stride.API.Rendering" LastDependency="VL.Stride.Runtime.TypeForwards.vl">
@@ -2857,24 +2893,6 @@
                   </Node>
                   <ControlPoint Id="IhTJ2QfOgqfPHI1lnueTye" Bounds="581,535" />
                 </Canvas>
-                <Patch Id="TYSyBERD5wHL8mKjQOUzeW" Name="Create" />
-                <Patch Id="JbSlFM4pdefOtiMhMNx9v8" Name="Update">
-                  <Pin Id="BaCRpT7RcFUMYBS0lwsI6f" Name="Input" Kind="InputPin" IsPinGroup="true" PinGroupDefaultCount="1">
-                    <p:TypeAnnotation LastCategoryFullName="Collections" LastDependency="VL.Collections.vl">
-                      <Choice Kind="TypeFlag" Name="Spread" />
-                      <p:TypeArguments>
-                        <TypeReference LastCategoryFullName="Stride.API.Rendering" LastDependency="VL.Stride.Rendering.vl">
-                          <Choice Kind="TypeFlag" Name="RenderGroupMask" />
-                        </TypeReference>
-                      </p:TypeArguments>
-                    </p:TypeAnnotation>
-                    <p:DefaultValue>
-                      <Item>Group0</Item>
-                    </p:DefaultValue>
-                  </Pin>
-                  <Pin Id="KGScod2cwXVOA6MujeRXUo" Name="Output" Kind="OutputPin" Bounds="548,535" />
-                  <Pin Id="RXwYFKlLOVDN5cRbhgXFy4" Name="Reset" Kind="InputPin" Bounds="478,539" />
-                </Patch>
                 <ProcessDefinition Id="SOS5I4lEdAkPWg9PZJSRud">
                   <Fragment Id="ObTuFYuCrngNiWN8oqisCo" Patch="TYSyBERD5wHL8mKjQOUzeW" Enabled="true" />
                   <Fragment Id="Su999gDkORoOjXk2apc1Kl" Patch="JbSlFM4pdefOtiMhMNx9v8" Enabled="true" />
@@ -2895,6 +2913,24 @@
                 <Link Id="L2KrNSrTQrILQDSnaFPs3g" Ids="DZ0k5eJjqXSNHJBAhx0Pmh,HRXoKVTxzgzLdiKLYDOQsM" />
                 <Link Id="Mkct13R5gv5O39drziFfSN" Ids="IhTJ2QfOgqfPHI1lnueTye,TLT4nF6QIUMMW3T3Ye8Bz0" />
                 <Link Id="SFkJk2x3bLgPR9G9Ybhdpj" Ids="RXwYFKlLOVDN5cRbhgXFy4,IhTJ2QfOgqfPHI1lnueTye" IsHidden="true" />
+                <Patch Id="TYSyBERD5wHL8mKjQOUzeW" Name="Create" />
+                <Patch Id="JbSlFM4pdefOtiMhMNx9v8" Name="Update">
+                  <Pin Id="BaCRpT7RcFUMYBS0lwsI6f" Name="Input" Kind="InputPin" IsPinGroup="true" PinGroupDefaultCount="1">
+                    <p:TypeAnnotation LastCategoryFullName="Collections" LastDependency="VL.Collections.vl">
+                      <Choice Kind="TypeFlag" Name="Spread" />
+                      <p:TypeArguments>
+                        <TypeReference LastCategoryFullName="Stride.API.Rendering" LastDependency="VL.Stride.Rendering.vl">
+                          <Choice Kind="TypeFlag" Name="RenderGroupMask" />
+                        </TypeReference>
+                      </p:TypeArguments>
+                    </p:TypeAnnotation>
+                    <p:DefaultValue>
+                      <Item>Group0</Item>
+                    </p:DefaultValue>
+                  </Pin>
+                  <Pin Id="RXwYFKlLOVDN5cRbhgXFy4" Name="Reset" Kind="InputPin" Bounds="478,539" />
+                  <Pin Id="KGScod2cwXVOA6MujeRXUo" Name="Output" Kind="OutputPin" Bounds="548,535" />
+                </Patch>
               </Patch>
             </Node>
             <!--
@@ -4657,6 +4693,8 @@
                       <FullNameCategoryReference ID="Primitive" />
                     </p:NodeReference>
                     <Pin Id="SRuNeHnkYvaM2P0fWm7DHd" Name="Condition" Kind="InputPin" />
+                    <ControlPoint Id="SUs1PqLtT4dMkxZJxZZN7O" Bounds="869,400" Alignment="Top" />
+                    <ControlPoint Id="SXGnP1MQTEkP5vkzog5YYb" Bounds="869,468" Alignment="Bottom" />
                     <Patch Id="GHfOSkXKOgrOCfhuoawqDK" ManuallySortedPins="true">
                       <Patch Id="VKQdMNABbALPPwDbdE7LSv" Name="Create" ManuallySortedPins="true" />
                       <Patch Id="Scl7LR9eP1zOswtoGacH4y" Name="Then" ManuallySortedPins="true" />
@@ -4670,8 +4708,6 @@
                         <Pin Id="QyyEZaNKulZLz1gdk1Tf9Y" Name="Result" Kind="OutputPin" />
                       </Node>
                     </Patch>
-                    <ControlPoint Id="SUs1PqLtT4dMkxZJxZZN7O" Bounds="869,400" Alignment="Top" />
-                    <ControlPoint Id="SXGnP1MQTEkP5vkzog5YYb" Bounds="869,468" Alignment="Bottom" />
                   </Node>
                   <Link Id="QxDFwDiuFJvLYt0ocMOseW" Ids="IV9l49tKAk3OefSAvSd5W8,SRuNeHnkYvaM2P0fWm7DHd" />
                   <Link Id="S223UU4xWINNvpRRP4VZUH" Ids="SUs1PqLtT4dMkxZJxZZN7O,SXGnP1MQTEkP5vkzog5YYb" IsFeedback="true" />
@@ -4747,6 +4783,8 @@
                           <FullNameCategoryReference ID="Primitive" />
                         </p:NodeReference>
                         <Pin Id="SO3QWL2oSDDMiKI0iuEUNI" Name="Condition" Kind="InputPin" />
+                        <ControlPoint Id="VT94m9awOleLWHuQTFxDLr" Bounds="1406,615" Alignment="Bottom" />
+                        <ControlPoint Id="EsatfHtBUDbM20PILmfrdo" Bounds="1364,471" Alignment="Top" />
                         <Patch Id="MAFROSrK8dvLJomyhNDL81" ManuallySortedPins="true">
                           <Patch Id="Qbe6gpqyds3L36A3QY7EIm" Name="Create" ManuallySortedPins="true" />
                           <Patch Id="TY3IIBdDWJlMgU5cJP0mMO" Name="Then" ManuallySortedPins="true" />
@@ -4772,8 +4810,6 @@
                             <Pin Id="OT2pK1RiQsFNltRBzPmWwU" Name="Output" Kind="OutputPin" />
                           </Node>
                         </Patch>
-                        <ControlPoint Id="VT94m9awOleLWHuQTFxDLr" Bounds="1406,615" Alignment="Bottom" />
-                        <ControlPoint Id="EsatfHtBUDbM20PILmfrdo" Bounds="1364,471" Alignment="Top" />
                       </Node>
                       <Node Bounds="1217,694,54,26" Id="UDxt5eu6eC8NPlPKcGRrVi">
                         <p:NodeReference LastCategoryFullName="Collections.Interfaces.ICollection" LastDependency="VL.Collections.vl">
@@ -4901,6 +4937,10 @@
                           <CategoryReference Kind="Category" Name="Primitive" />
                         </p:NodeReference>
                         <Pin Id="SCHywhOq350P2Ukdje27rb" Name="Condition" Kind="InputPin" />
+                        <ControlPoint Id="KHgTVd1UNqWNUnTjVvPJ8u" Bounds="1795,639" Alignment="Bottom" />
+                        <ControlPoint Id="Bu1otuQNvi7LN6IebRB7vo" Bounds="1821,473" Alignment="Top" />
+                        <ControlPoint Id="FSOhJ8ADuzRMaooDnghKmI" Bounds="1867,639" Alignment="Bottom" />
+                        <ControlPoint Id="S5MDRHthnMjO14tNkTyoWl" Bounds="1873,473" Alignment="Top" />
                         <Patch Id="CVxJfuzXRtqLS3jBqMxvsd" ManuallySortedPins="true">
                           <Patch Id="P2kzOJ1YruMNaEQQbGC8Kg" Name="Create" ManuallySortedPins="true" />
                           <Patch Id="FMQwe3zyWLJQBWVOpWo04B" Name="Then" ManuallySortedPins="true" />
@@ -4926,10 +4966,6 @@
                             <Pin Id="QNk1fygMQrDPl6h1vQFQeH" Name="Output" Kind="OutputPin" />
                           </Node>
                         </Patch>
-                        <ControlPoint Id="KHgTVd1UNqWNUnTjVvPJ8u" Bounds="1795,639" Alignment="Bottom" />
-                        <ControlPoint Id="Bu1otuQNvi7LN6IebRB7vo" Bounds="1821,473" Alignment="Top" />
-                        <ControlPoint Id="FSOhJ8ADuzRMaooDnghKmI" Bounds="1867,639" Alignment="Bottom" />
-                        <ControlPoint Id="S5MDRHthnMjO14tNkTyoWl" Bounds="1873,473" Alignment="Top" />
                       </Node>
                     </Patch>
                   </Node>
@@ -7715,6 +7751,24 @@
               <ProcessDefinition Id="HfYLO3m0z4SOEJxlZ0LTNj" IsHidden="true" />
             </Patch>
           </Node>
+          <!--
+
+    ************************ IAmbientOcclusionEffect ************************
+
+-->
+          <Node Name="IAmbientOcclusionEffect" Bounds="334,556" Id="RpoDudodA7HN57yBTitWcd">
+            <p:NodeReference>
+              <Choice Kind="ForwardDefinition" Name="Forward" />
+              <CategoryReference Kind="Category" Name="Primitive" />
+            </p:NodeReference>
+            <p:TypeAnnotation LastCategoryFullName="TR.Stride.PostProcess" LastDependency="TR.Stride.PostProcess.dll">
+              <Choice Kind="TypeFlag" Name="IAmbientOcclusionEffect" />
+            </p:TypeAnnotation>
+            <Patch Id="KfnMD8Q2ulGLVwBqaKX7IS">
+              <Canvas Id="FDgoHpb2XFVOw66DR8CYtJ" BordersChecked="false" CanvasType="Group" />
+              <ProcessDefinition Id="DiMHXmrlBuRMV8PF6QpN9s" IsHidden="true" />
+            </Patch>
+          </Node>
         </Canvas>
         <Canvas Id="AZhz5Xs9uL1L3wxWCVnauR" Name="Materials" Position="386,478">
           <!--
@@ -7867,4 +7921,5 @@
   <PlatformDependency Id="SiXKNJw2QO7LlcU1chuVR0" Location="./src/bin/Debug/net472/Stride.Shaders.dll" />
   <PlatformDependency Id="NZUtZeKxLQfLIzrfEHMoL8" Location="../../../../vvvv50/VVVV.Gamma/src/bin/Debug/net472/Stride.VirtualReality.dll" />
   <PlatformDependency Id="UFi5amOSBHEOUSLKw0jUgq" Location="./dependencies/vvvv.geometry3Sharp.dll" />
+  <PlatformDependency Id="QWqpXLEBHhcLOxjmoXhmlw" Location="../../../../vvvv-binaries/vvvv_gamma/TR.Stride.PostProcess.dll" />
 </Document>

@@ -7,14 +7,14 @@ namespace VL.ImGui.Editors
     using ImGui = ImGuiNET.ImGui;
 
     abstract class ListEditorBase<TList, T> : IObjectEditor, IDisposable
-                where TList : IReadOnlyList<T>
+                where TList : IReadOnlyList<T?>
     {
         private readonly List<(IObjectEditor? editor, IDisposable ownership)> editors = new List<(IObjectEditor?, IDisposable)>();
-        private readonly Channel<TList> channel;
+        private readonly IChannel<TList> channel;
         private readonly ObjectEditorContext editorContext;
         private readonly string label;
 
-        public ListEditorBase(Channel<TList> channel, ObjectEditorContext editorContext)
+        public ListEditorBase(IChannel<TList> channel, ObjectEditorContext editorContext)
         {
             this.channel = channel;
             this.editorContext = editorContext;
@@ -31,6 +31,9 @@ namespace VL.ImGui.Editors
         public void Draw(Context? context)
         {
             var list = channel.Value;
+            if (list is null)
+                return;
+
             for (int i = editors.Count - 1; i >= list.Count; i--)
             {
                 editors[i].ownership.Dispose();
@@ -48,17 +51,17 @@ namespace VL.ImGui.Editors
                     if (i >= editors.Count)
                     {
                         // Setup channel for item
-                        var itemChannel = new Channel<T>();
+                        var itemChannel = ChannelHelpers.CreateChannelOfType<T>();
                         var j = i;
 
                         var ownership = new CompositeDisposable
                         {
-                            channel.Merge(itemChannel, c => c[j], item => SetItem(channel.Value, j, item), 
+                            channel.Merge(itemChannel, c => c != null ? c[j] : default, item => channel.Value != null ? SetItem(channel.Value, j, item) : default, 
                             initialization: ChannelMergeInitialization.UseA, 
                             pushEagerlyTo: ChannelSelection.ChannelA)
                         };
 
-                        editor = editorContext.Factory.CreateObjectEditor(itemChannel, editorContext);
+                        editor = editorContext.Factory.CreateObjectEditor(itemChannel.ChannelOfObject, editorContext);
                         if (editor is IDisposable disposable)
                             ownership.Add(disposable);
 
@@ -80,6 +83,6 @@ namespace VL.ImGui.Editors
             }
         }
 
-        protected abstract TList SetItem(TList list, int i, T item);
+        protected abstract TList SetItem(TList list, int i, T? item);
     }
 }

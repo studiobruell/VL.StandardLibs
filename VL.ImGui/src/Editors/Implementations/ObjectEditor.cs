@@ -15,11 +15,11 @@ namespace VL.ImGui.Editors
     {
         readonly Dictionary<IVLPropertyInfo, IObjectEditor?> editors = new Dictionary<IVLPropertyInfo, IObjectEditor?>();
         readonly CompositeDisposable subscriptions = new CompositeDisposable();
-        readonly Channel<T> channel;
+        readonly IChannel<T> channel;
         readonly IObjectEditorFactory factory;
         readonly IVLTypeInfo typeInfo;
 
-        public ObjectEditor(Channel<T> channel, ObjectEditorContext editorContext, IVLTypeInfo typeInfo)
+        public ObjectEditor(IChannel<T> channel, ObjectEditorContext editorContext, IVLTypeInfo typeInfo)
         {
             this.channel = channel;
             this.factory = editorContext.Factory;
@@ -49,17 +49,17 @@ namespace VL.ImGui.Editors
                         if (IsVisible(property))
                         {
                             // Setup channel
-                            var propertyChannel = Channel.CreateChannelOfType(property.Type);
+                            var propertyChannel = ChannelHelpers.CreateChannelOfType(property.Type);
                             subscriptions.Add(
-                                channel.Merge(
+                                channel.ChannelOfObject.Merge(
                                     propertyChannel.ChannelOfObject,
-                                    (object v) => property.GetValue((IVLObject)channel.Value),
+                                    (object? v) => property.GetValue((IVLObject)channel.Value),
                                     v => (T)property.WithValue((IVLObject)channel.Value, v), 
                                     initialization: ChannelMergeInitialization.UseA,
                                     pushEagerlyTo: ChannelSelection.ChannelA));
 
                             var attributes = property.GetAttributes<Attribute>().ToList();
-                            propertyChannel.Attributes.Value = attributes;
+                            propertyChannel.Attributes().Value = attributes;
                             var label = attributes.OfType<LabelAttribute>().FirstOrDefault()?.Label ?? property.OriginalName;
                             var contextForProperty = new ObjectEditorContext(factory, label);
                             editor = editors[property] = factory.CreateObjectEditor(propertyChannel, contextForProperty);

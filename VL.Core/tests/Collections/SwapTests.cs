@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -78,6 +79,27 @@ namespace VL.Core.Tests
         }
 
         [Test]
+        public void FromMutableToConcurrentDictionary()
+        {
+            var b = new Dictionary<string, float>
+            {
+                { "a", -1 },
+                { "b", +2 }
+            };
+
+            var newType = typeof(ConcurrentDictionary<object, float>);
+            var d2_ = b.RestoreObject(newType);
+            var d2 = d2_ as ConcurrentDictionary<object, float>;
+
+            Assert.That(d2, Is.Not.Null);
+
+            Assert.AreNotEqual(b.GetType(), d2.GetType());
+
+            Assert.AreEqual(d2["a"], -1);
+            Assert.AreEqual(d2["b"], +2);
+        }
+
+        [Test]
         public void FromImmutableToMutableDictionary()
         {
             var b = ImmutableDictionary.CreateBuilder<string, float>();
@@ -120,7 +142,7 @@ namespace VL.Core.Tests
         [Test]
         public void Channel_()
         {
-            var c = Channel.CreateChannelOfType(typeof(string)) as Channel<string>;
+            var c = ChannelHelpers.CreateChannelOfType(typeof(string)) as Channel<string>;
             c.Value = "a";
 
             var newType = typeof(Channel<object>);
@@ -131,6 +153,56 @@ namespace VL.Core.Tests
 
             Assert.AreNotEqual(c.GetType(), c2.GetType());
 
+            Assert.AreEqual(c2.Value, "a");
+        }
+
+        [Test]
+        public void Channel_To_NonGeneric()
+        {
+            var c = ChannelHelpers.CreateChannelOfType(typeof(string)) as Channel<string>;
+            c.Value = "a";
+
+            var newType = typeof(IChannel);
+            var c2_ = c.RestoreObject(newType);
+            var c2 = c2_ as IChannel;
+
+            Assert.That(c2, Is.Not.Null);
+
+            Assert.AreEqual(c.GetType(), c2.GetType());
+
+            Assert.AreEqual(c2.Object, "a");
+        }
+
+        [Test]
+        public void Optional_HasValue()
+        {
+            var c = new Optional<string>("a");
+            var newType = typeof(Optional<object>);
+            var c2 = (Optional<object>)c.RestoreObject(newType);
+            Assert.That(c2, Is.Not.Null);
+            Assert.AreNotEqual(c.GetType(), c2.GetType());
+            Assert.AreEqual(c2.Value, "a");
+        }
+
+        [Test]
+        public void Optional_HasNoValue()
+        {
+            var c = new Optional<string>();
+            var newType = typeof(Optional<object>);
+            var c2 = (Optional<object>)c.RestoreObject(newType);
+            Assert.That(c2, Is.Not.Null);
+            Assert.AreNotEqual(c.GetType(), c2.GetType());
+            Assert.That(c2.HasNoValue);
+        }
+
+        [Test]
+        public void Optional_FromValue()
+        {
+            var c = "a";
+            var newType = typeof(Optional<object>);
+            var c2 = (Optional<object>)c.RestoreObject(newType);
+            Assert.That(c2, Is.Not.Null);
+            Assert.AreNotEqual(c.GetType(), c2.GetType());
             Assert.AreEqual(c2.Value, "a");
         }
 
@@ -301,6 +373,38 @@ namespace VL.Core.Tests
 
             Assert.AreEqual(list[0], "a");
             Assert.AreEqual(list[1], "b");
+        }
+
+        [Test]
+        public void ToImmutableList()
+        {
+            var spread = Spread.Create<object>("a", "b");
+
+            var newType = typeof(ImmutableList<string>);
+            var list = spread.RestoreObject(newType) as ImmutableList<string>;
+
+            Assert.That(list, Is.Not.Null);
+
+            Assert.AreNotEqual(spread.GetType(), list.GetType());
+
+            Assert.AreEqual(list[0], "a");
+            Assert.AreEqual(list[1], "b");
+        }
+
+        [Test]
+        public void ToImmutableHashSet()
+        {
+            var spread = Spread.Create<object>("a", "b");
+
+            var newType = typeof(ImmutableHashSet<string>);
+            var set = spread.RestoreObject(newType) as ImmutableHashSet<string>;
+
+            Assert.That(set, Is.Not.Null);
+
+            Assert.AreNotEqual(spread.GetType(), set.GetType());
+            Assert.IsTrue(set.Count == 2);
+            set = set.Remove("a").Remove("b");
+            Assert.IsTrue(set.Count == 0);
         }
 
         [Test]

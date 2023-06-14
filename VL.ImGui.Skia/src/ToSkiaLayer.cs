@@ -54,6 +54,7 @@ namespace VL.ImGui
         CallerInfo? _lastCallerInfo;
         ImDrawDataPtr _drawDataPtr;
         bool _readyToBeDrawn;
+        WidgetLabel widgetLabel = new();
 
         public unsafe ToSkiaLayer()
         {
@@ -96,14 +97,14 @@ namespace VL.ImGui
                 _context.NewFrame();
                 try
                 {
+                    using var _ = Style.Apply();
+
                     if (DefaultWindow)
                     {
                         var viewPort = ImGui.GetMainViewport();
                         ImGui.SetNextWindowPos(viewPort.WorkPos);
                         ImGui.SetNextWindowSize(viewPort.WorkSize);
-                        
-                        Style?.Set(_context);
-                        ImGui.Begin(Context.GetLabel(this, null),
+                        ImGui.Begin(widgetLabel.Update(null),
                             ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
                             ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus |
                             ImGuiWindowFlags.NoFocusOnAppearing | ImGuiWindowFlags.NoDecoration |
@@ -130,7 +131,6 @@ namespace VL.ImGui
                     if (DefaultWindow)
                     {
                         ImGui.End();
-                        Style?.Reset(_context);
                     }
 
                     // Render (builds mesh with texture coordinates)

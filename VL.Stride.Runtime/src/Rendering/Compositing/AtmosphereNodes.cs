@@ -94,7 +94,7 @@ namespace VL.Stride.Rendering.Compositing
 
             yield return factory.NewStructNode(renderingCategoryAdvanced, new TextureSettings2d(64, 64, PixelFormat.R16G16B16A16_Float))
                .AddCachedInput(nameof(TextureSettings2d.Width), x => x.v.Width, (x, v) => x.v.Width = v, 64)
-               .AddCachedInput(nameof(TextureSettings2d.Width), x => x.v.Height, (x, v) => x.v.Height = v, 64)
+               .AddCachedInput(nameof(TextureSettings2d.Height), x => x.v.Height, (x, v) => x.v.Height = v, 64)
                .AddCachedInput(nameof(TextureSettings2d.Format), x => x.v.Format, (x, v) => x.v.Format = v, PixelFormat.R16G16B16A16_Float)
                .AddStateOutput();
 

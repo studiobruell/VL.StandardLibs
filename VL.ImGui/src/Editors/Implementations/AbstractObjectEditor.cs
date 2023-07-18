@@ -11,7 +11,7 @@ namespace VL.ImGui.Editors
 
     sealed class AbstractObjectEditor : IObjectEditor, IDisposable
     {
-        readonly Channel publicChannel;
+        readonly IChannel<object> publicChannel;
         readonly IDisposable publicChannelSubscription;
         readonly IObjectEditorFactory factory;
 
@@ -22,12 +22,13 @@ namespace VL.ImGui.Editors
         readonly ImmutableArray<IVLTypeInfo> possibleTypes;
         readonly string[]? possibleTypeEntries;
 
-        Channel? privateChannel;
+        IChannel<object>? privateChannel;
         Type? currentEditorType;
         IObjectEditor? currentEditor;
         bool isBusy;
+        WidgetLabel widgetLabel = new();
 
-        public AbstractObjectEditor(Channel channel, ObjectEditorContext editorContext, IVLTypeInfo typeInfo)
+        public AbstractObjectEditor(IChannel<object> channel, ObjectEditorContext editorContext, IVLTypeInfo typeInfo)
         {
             this.publicChannel = channel;
             this.editorContext = editorContext;
@@ -40,7 +41,7 @@ namespace VL.ImGui.Editors
             }
 
             OnNext(channel.Object);
-            publicChannelSubscription = channel.ToObservableOfObject().Subscribe(OnNext);
+            publicChannelSubscription = channel.Subscribe(OnNext);
         }
 
         public void Dispose()
@@ -70,9 +71,9 @@ namespace VL.ImGui.Editors
             {
                 // Build new channel using the runtime type
                 privateChannel?.Dispose();
-                privateChannel = Channel.CreateChannelOfType(type);
+                privateChannel = ChannelHelpers.CreateChannelOfType(type);
                 privateChannel.Object = value;
-                privateChannelSubscription.Disposable = privateChannel.ToObservableOfObject().Subscribe(v =>
+                privateChannelSubscription.Disposable = privateChannel.Subscribe(v =>
                 {
                     // Push to upstream channel
                     PushValue(publicChannel, v);
@@ -83,7 +84,7 @@ namespace VL.ImGui.Editors
             PushValue(privateChannel, value!);
         }
 
-        void PushValue(Channel dst, object value)
+        void PushValue(IChannel<object> dst, object? value)
         {
             if (isBusy)
                 return;
@@ -135,7 +136,7 @@ namespace VL.ImGui.Editors
             {
                 var s = publicChannel.Object.ToString();
                 if (string.IsNullOrEmpty(editorContext.Label))
-                    ImGui.LabelText(Context.GetLabel(this, editorContext.Label), s);
+                    ImGui.LabelText(widgetLabel.Update(editorContext.Label), s);
                 else
                     ImGui.TextUnformatted(s);
             }
@@ -143,7 +144,7 @@ namespace VL.ImGui.Editors
             {
                 var s = "NULL";
                 if (string.IsNullOrEmpty(editorContext.Label))
-                    ImGui.LabelText(Context.GetLabel(this, editorContext.Label), s);
+                    ImGui.LabelText(widgetLabel.Update(editorContext.Label), s);
                 else
                     ImGui.TextUnformatted(s);
             }

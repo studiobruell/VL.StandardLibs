@@ -13,18 +13,18 @@ namespace VL.ImGui.Widgets
         /// <summary>
         /// If set the Header will have a close button which will push to the channel once clicked.
         /// </summary>
-        public Channel<Unit> Closing { get; set; } = DummyChannel<Unit>.Instance;
+        public IChannel<Unit> Closing { get; set; } = ChannelHelpers.Dummy<Unit>();
 
         /// <summary>
         /// Returns true if the Header is displayed. Set to true to display the Header.
         /// </summary>
-        public Channel<bool>? Visible { private get; set; }
+        public IChannel<bool>? Visible { private get; set; }
         ChannelFlange<bool> VisibleFlange = new ChannelFlange<bool>(true);
 
         /// <summary>
         /// Returns true if the Header is collapsed. Set to true to collapse the Header.
         /// </summary>
-        public Channel<bool>? Collapsed { private get; set; }
+        public IChannel<bool>? Collapsed { private get; set; }
         ChannelFlange<bool> CollapsedFlange = new ChannelFlange<bool>(false);
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace VL.ImGui.Widgets
                 if (Closing.IsValid())
                 {
                     var isVisible = true;
-                    ContentIsVisible = ImGuiNET.ImGui.CollapsingHeader(Context.GetLabel(this, Label), ref isVisible, Flags);
+                    ContentIsVisible = ImGuiNET.ImGui.CollapsingHeader(widgetLabel.Update(Label), ref isVisible, Flags);
                     if (!isVisible)
                     {
                         Closing.Value = default;
@@ -61,7 +61,7 @@ namespace VL.ImGui.Widgets
                     }      
                 }
                 else
-                    ContentIsVisible = ImGuiNET.ImGui.CollapsingHeader(Context.GetLabel(this, Label), Flags);
+                    ContentIsVisible = ImGuiNET.ImGui.CollapsingHeader(widgetLabel.Update(Label), Flags);
 
                 CollapsedFlange.Value = !ContentIsVisible;
 

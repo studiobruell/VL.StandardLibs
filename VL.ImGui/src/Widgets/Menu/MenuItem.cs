@@ -6,7 +6,7 @@ namespace VL.ImGui.Widgets
     /// Create a MenuItem. Keyboardshortcuts are displayed as a convenience but not processed by Dear ImGui at the moment.
     /// </summary>
     [GenerateNode(Category = "ImGui.Widgets")]
-    internal partial class MenuItem : ChannelWidget<bool>
+    internal partial class MenuItem : ChannelWidget<bool>, IHasLabel
     {
         public string? Label { get; set; }
 
@@ -16,7 +16,7 @@ namespace VL.ImGui.Widgets
 
         public bool Selectable { get; set; }
 
-        public Channel<bool>? IsSelected { private get; set; }
+        public IChannel<bool>? IsSelected { private get; set; }
         ChannelFlange<bool> IsSelectedFlange = new ChannelFlange<bool>(true);
 
         internal override void UpdateCore(Context context)
@@ -26,12 +26,12 @@ namespace VL.ImGui.Widgets
             if (Selectable)
             {
                 var isSelected = IsSelectedFlange.Update(IsSelected);
-                if (ImGuiNET.ImGui.MenuItem(Context.GetLabel(this, Label), Shortcut, ref isSelected, enabled: Enabled))
+                if (ImGuiNET.ImGui.MenuItem(widgetLabel.Update(Label), Shortcut, ref isSelected, enabled: Enabled))
                     Value = value;
                 IsSelectedFlange.Value = isSelected;
             }
             else
-            if (ImGuiNET.ImGui.MenuItem(Context.GetLabel(this, Label), Shortcut, selected: false, enabled: Enabled))
+            if (ImGuiNET.ImGui.MenuItem(widgetLabel.Update(Label), Shortcut, selected: false, enabled: Enabled))
                 Value = value;
 
         }

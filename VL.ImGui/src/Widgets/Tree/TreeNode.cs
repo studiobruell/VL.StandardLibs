@@ -12,7 +12,7 @@ namespace VL.ImGui.Widgets
         /// <summary>
         /// Returns true if the TreeNode is collapsed. Set to true to collapse the TreeNode.
         /// </summary>
-        public Channel<bool>? Collapsed { private get; set; }
+        public IChannel<bool>? Collapsed { private get; set; }
         ChannelFlange<bool> CollapsedFlange = new ChannelFlange<bool>(true);
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace VL.ImGui.Widgets
 
             ImGuiNET.ImGui.SetNextItemOpen(!collapsed);
 
-            ContentIsVisible = ImGuiNET.ImGui.TreeNodeEx(Context.GetLabel(this, Label), Flags);
+            ContentIsVisible = ImGuiNET.ImGui.TreeNodeEx(widgetLabel.Update(Label), Flags);
 
             CollapsedFlange.Value = !ContentIsVisible;
 

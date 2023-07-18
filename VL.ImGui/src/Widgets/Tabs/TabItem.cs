@@ -14,18 +14,18 @@ namespace VL.ImGui.Widgets
         /// <summary>
         /// If set the Tab will have a close button which will push to the channel once clicked.
         /// </summary>
-        public Channel<Unit> Closing { get; set; } = DummyChannel<Unit>.Instance;
+        public IChannel<Unit> Closing { get; set; } = ChannelHelpers.Dummy<Unit>();
 
         /// <summary>
         /// Returns true if the Tab is displayed. Set to true to display the Tab.
         /// </summary>
-        public Channel<bool>? Visible { private get; set; }
+        public IChannel<bool>? Visible { private get; set; }
         ChannelFlange<bool> VisibleFlange = new ChannelFlange<bool>(true);
 
         /// <summary>
         /// Returns true if the Tab is activated/selected. Set to true to activate the Tab.
         /// </summary>
-        public Channel<bool>? Active { private get; set; }
+        public IChannel<bool>? Active { private get; set; }
         ChannelFlange<bool> ActiveFlange = new ChannelFlange<bool>(false);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace VL.ImGui.Widgets
                 if (Closing.IsValid() || flags != ImGuiNET.ImGuiTabItemFlags.None)
                 {
                     var isVisible = true;
-                    isActive = ImGuiNET.ImGui.BeginTabItem(Context.GetLabel(this, Label), ref isVisible, flags);
+                    isActive = ImGuiNET.ImGui.BeginTabItem(widgetLabel.Update(Label), ref isVisible, flags);
                     if (!isVisible)
                     {
                         Closing.Value = default;
@@ -68,7 +68,7 @@ namespace VL.ImGui.Widgets
                         
                 }
                 else
-                    isActive = ImGuiNET.ImGui.BeginTabItem(Context.GetLabel(this, Label));
+                    isActive = ImGuiNET.ImGui.BeginTabItem(widgetLabel.Update(Label));
 
                 ActiveFlange.Value = isActive;
                 ContentIsVisible = isActive;

@@ -2,6 +2,7 @@
 using ImGuiNET;
 using VL.Lib.Reactive;
 using System.Reactive;
+using System.Reflection.Emit;
 
 namespace VL.ImGui.Windows
 {
@@ -12,17 +13,17 @@ namespace VL.ImGui.Windows
     {
         public Widget? Content { get; set; }
 
-        public string Name { get; set; } = "Window";
+        public string? Name { get; set; }
 
         /// <summary>
         /// If set the window will have a close button which will push to the channel once clicked.
         /// </summary>
-        public Channel<Unit> Closing { get; set; } = DummyChannel<Unit>.Instance;
+        public IChannel<Unit> Closing { get; set; } = ChannelHelpers.Dummy<Unit>();
 
         /// <summary>
         /// Bounds of the Window.
         /// </summary>
-        public Channel<RectangleF>? Bounds { private get; set; }
+        public IChannel<RectangleF>? Bounds { private get; set; }
         ChannelFlange<RectangleF> BoundsFlange = new ChannelFlange<RectangleF>(new RectangleF(0f, 0f, 1f, 1f));
 
         /// <summary>
@@ -31,13 +32,13 @@ namespace VL.ImGui.Windows
         /// We bend the original lib here, because in ImGui it can't be used to set visibility of the window.
         /// https://github.com/ocornut/imgui/blob/5bb287494096461f90eb5d18135f7c4809efd2f5/imgui.h#L320
         /// 
-        public Channel<bool>? Visible { private get; set; }
+        public IChannel<bool>? Visible { private get; set; }
         ChannelFlange<bool> VisibleFlange = new ChannelFlange<bool>(true);
 
         /// <summary>
         /// Returns true if the Window is collapsed. Set to true to collapse the window.
         /// </summary>
-        public Channel<bool>? Collapsed { private get; set; }
+        public IChannel<bool>? Collapsed { private get; set; }
         ChannelFlange<bool> CollapsedFlange = new ChannelFlange<bool>(false);
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace VL.ImGui.Windows
                 if (Closing.IsValid())
                 {
                     var isVisible = true;
-                    ContentIsVisible = ImGui.Begin(Name, ref isVisible, Flags);
+                    ContentIsVisible = ImGui.Begin(widgetLabel.Update(Name), ref isVisible, Flags);
                     if (!isVisible)
                     {
                         Closing.Value = default;
@@ -84,7 +85,7 @@ namespace VL.ImGui.Windows
                 }
                 else
                 {
-                    ContentIsVisible = ImGui.Begin(Name, Flags);
+                    ContentIsVisible = ImGui.Begin(widgetLabel.Update(Name), Flags);
                 }
 
                 try

@@ -21,7 +21,6 @@ RootAssets:
     - 05af8c3e-edd2-4642-9fe5-2a6f927fceea:Textures/Icons/UIGizmo
     - 11e4e030-b373-4f56-853b-10318f78589f:Materials/BodyWhite
     - 1864157c-6410-40a5-9021-8640a1cde8f3:Physics/StaticBox
-    - 1d078d25-d039-44b2-8e4b-96fadc1ac497:Models/Small_Table
     - 1f6aad91-efea-49c3-a7a7-932b79ee530d:Physics/RigidBox
     - 259c55d9-07e4-463f-8105-5914907b9a5d:Materials/ShaderMaterial
     - 2c75737f-2b01-4e48-ab0a-acfcfd9937fd:Models/Sphere

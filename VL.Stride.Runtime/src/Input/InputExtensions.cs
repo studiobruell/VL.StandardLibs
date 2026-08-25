@@ -3,6 +3,7 @@ using Stride.Core.Mathematics;
 using Stride.Input;
 using Stride.Rendering;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace VL.Stride.Input
 {
@@ -62,6 +63,25 @@ namespace VL.Stride.Input
 
         [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(SetSurfaceSize))]
         extern static void SetSurfaceSize(this PointerDeviceBase device, Vector2 newSize);
+
+        // --- RemoveDownPointer support ---
+
+        [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "pointerState")]
+        extern static ref PointerDeviceState GetPointerState(this PointerDeviceBase device);
+
+        [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "downPointers")]
+        extern static ref HashSet<PointerPoint> GetDownPointers(this PointerDeviceState state);
+
+        /// <summary>
+        /// Removes a pointer from the device's down-pointers set, effectively
+        /// synthetically releasing it without an actual input event.
+        /// </summary>
+        public static void RemoveDownPointer(this PointerDeviceBase device, PointerPoint pointer)
+        {
+            var state = device.GetPointerState();
+            var set = state.GetDownPointers();
+            set.Remove(pointer);
+        }
 
         /// <summary>
         /// The priority of the input devices. Larger means higher priority when selecting the first device of some type.

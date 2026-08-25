@@ -22,6 +22,24 @@
     <!-- Setting AutoGen metadata is a hack to avoid getting picked up by asset compiler -->
     <None Include="..\help\**\*" Link="help\%(RecursiveDir)%(Filename)%(Extension)" Pack="true" AutoGen="false" PackagePath="help\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\*.cs" Link="Atmosphere\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+    <Compile Include="..\..\TR.Stride\TR.Stride.Atmosphere\*.cs" Link="Atmosphere\%(RecursiveDir)%(Filename)%(Extension)">
+    </Compile>
+      
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.sdsl" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.sdfx" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+      
+    <None Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.cs" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </None>
+      
+    <Compile Include="..\..\TR.Stride\TR.Stride.Atmosphere\Effects\*.cs" Link="Atmosphere\Effects\%(RecursiveDir)%(Filename)%(Extension)">
+    </Compile>
+  </ItemGroup>-->
   
   <ItemGroup>
     <!-- A pure package dependency so on install all VL packages come in -->
@@ -52,6 +70,8 @@
     <ProjectReference Include="..\..\VL.Core.Skia\VL.Core.Skia.csproj" />
     <ProjectReference Include="..\..\VL.Core\src\VL.Core.csproj" />
     <ProjectReference Include="..\..\VL.CoreLib\src\VL.CoreLib.csproj" />
+	<ProjectReference Include="..\..\TR.Stride\TR.Stride.Atmosphere\TR.Stride.Atmosphere.csproj" />
+	<ProjectReference Include="..\..\TR.Stride\TR.Stride.PostProcess\TR.Stride.PostProcess.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="vvvv.geometry3Sharp">
@@ -156,6 +176,11 @@
     <Compile Update="Effects\Utils\CalcDispatchArgs.sdsl.cs">
       <DesignTime>True</DesignTime>
     </Compile>
+	<Compile Update="Effects\VLAtmosphereEffectMain.sdfx.cs">
+		<DesignTime>True</DesignTime>
+		<DesignTimeSharedInput>True</DesignTimeSharedInput>
+		<AutoGen>True</AutoGen>
+	</Compile>
     <Compile Update="Effects\VLEffectMain.sdfx.cs">
       <DesignTime>True</DesignTime>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -211,6 +236,9 @@
     <None Update="Effects\TextureFX\TextureFXGraphEffect.sdfx">
       <LastGenOutput>TextureFXGraphEffect.sdfx.cs</LastGenOutput>
     </None>
+	<None Update="Effects\VLAtmosphereEffectMain.sdfx">
+		<LastGenOutput>VLAtmosphereEffectMain.sdfx.cs</LastGenOutput>
+	</None>
     <None Update="Effects\VLEffectMain.sdfx">
       <LastGenOutput>VLEffectMain.sdfx.cs</LastGenOutput>
     </None>

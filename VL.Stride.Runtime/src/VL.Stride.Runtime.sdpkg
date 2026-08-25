@@ -9,6 +9,7 @@ Meta:
 AssetFolders:
     -   Path: !dir Assets
     -   Path: !dir Effects
+    -   Path: !dir ../../TR.Stride/TR.Stride.Atmosphere/Effects
 ResourceFolders:
     - !dir Resources
 OutputGroupDirectories: {}

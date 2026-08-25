@@ -115,6 +115,11 @@ namespace VL.Stride.Rendering
         public RenderStage TransparentRenderStage { get; set; }
 
         /// <summary>
+        /// The render stage after the MSAA resolver to draw into the resolved texture
+        /// </summary>
+        public RenderStage ResolvedRenderStage { get; set; }
+
+        /// <summary>
         /// The shadow map render stages for shadow casters. No shadow rendering will happen if null.
         /// </summary>
         [MemberCollection(NotNullItems = true)]
@@ -339,6 +344,11 @@ namespace VL.Stride.Rendering
             if (TransparentRenderStage != null)
             {
                 context.RenderView.RenderStages.Add(TransparentRenderStage);
+            }
+
+            if (ResolvedRenderStage != null)
+            {
+                context.RenderView.RenderStages.Add(ResolvedRenderStage);
             }
 
             if (GBufferRenderStage != null && LightProbes)

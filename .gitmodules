@@ -3,3 +3,7 @@
 	url = https://github.com/vvvv/ImGui.NET-nativebuild.git
 	branch = master
 	
+[submodule "TR.Stride"]
+	path = TR.Stride
+	url = https://github.com/tebjan/TR.Stride.git
+	branch = vvvv-integration
